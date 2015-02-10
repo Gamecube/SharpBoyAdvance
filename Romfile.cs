@@ -18,6 +18,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 
 namespace SharpBoyAdvance
 {
@@ -270,10 +271,10 @@ namespace SharpBoyAdvance
             byte[] bytes = new byte[count];
             for (int i = 0; i < count; i++)
             {
-                bytes[i] = binary[offset];
-                offset += 1;
+                bytes[i] = binary[offset + i];
             };
 
+            this.offset += (uint)(count);
             return bytes;
         }
 
@@ -289,9 +290,10 @@ namespace SharpBoyAdvance
             byte[] bytes = new byte[count];
             for (int i = 0; i < count; i++)
             {
-                bytes[i] = binary[offset];
-                offset += 1;
+                bytes[i] = binary[offset + i];
             };
+
+            this.offset += (uint)(count);
 
             return encoding.GetString(bytes);
         }
@@ -375,9 +377,10 @@ namespace SharpBoyAdvance
             int length = bytes.Length;
             for (int i = 0; i < length; i++)
             {
-                binary[offset] = bytes[i];
-                offset += 1;
+                binary[offset + i] = bytes[i];
             };
+
+            this.offset += (uint)(length);
         }
 
         /// <summary>
@@ -392,9 +395,10 @@ namespace SharpBoyAdvance
             int length = bytes.Length;
             for (int i = 0; i < length; i++)
             {
-                binary[offset] = bytes[i];
-                offset += 1;
+                binary[offset + i] = bytes[i];
             };
+
+            this.offset += (uint)(length);
         }
 
         /// <summary>
@@ -408,9 +412,10 @@ namespace SharpBoyAdvance
             int length = bytes.Length;
             for (int i = 0; i < length; i++)
             {
-                binary[offset] = bytes[i];
-                offset += 1;
+                binary[offset + i] = bytes[i];
             };
+
+            this.offset += (uint)(length);
         }
 
         #endregion
@@ -424,6 +429,7 @@ namespace SharpBoyAdvance
         /// <param name="begin"></param>
         /// <param name="source"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public List<long> SearchBytes(uint begin, byte[] source)
         {
             int length = source.Length;
